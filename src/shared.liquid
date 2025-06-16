@@ -1,0 +1,154 @@
+{% if annual.winner == keynote.winner %}
+{% assign combinedWinner = true %}
+{% else %}
+{% assign combinedWinner = false %}
+{% endif %}
+
+{% assign annualDate = annual.date | date: '%s' %}
+{% assign keynoteDate = keynote.date | date: '%s' %}
+
+{% assign crownedDay = annual.date | date: "%e" %}
+{% assign dateCrowned = annual.date %}
+
+{% if keynoteDate > annualDate %}
+  {% assign dateCrowned = keynote.date %}
+  {% assign crownedDay = keynote.date | date: "%e" %}
+{% endif %}
+
+{%- case crownedDay -%}
+{%- when 1 -%}
+{% assign crownedSuffix = 'st' %}
+{%- when 2 -%}
+{% assign crownedSuffix = 'nd' %}
+{%- when 3 -%}
+{% assign crownedSuffix = 'rd' %}
+{%- else -%}
+{% assign crownedSuffix = 'th' %}
+{%- endcase -%}
+
+{% assign keynoteDay = keynote.date | date: "%e"| modulo: 10 %}
+{%- case keynoteDay -%}
+{%- when 1 -%}
+{% assign keynoteSuffix = 'st' %}
+{%- when 2 -%}
+{% assign keynoteSuffix = 'nd' %}
+{%- when 3 -%}
+{% assign keynoteSuffix = 'rd' %}
+{%- else -%}
+{% assign keynoteSuffix = 'th' %}
+{%- endcase -%}
+
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  .wrapper {
+    box-sizing: border-box;
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+  }
+
+  .globe-container {
+    position: relative;
+    margin-top: -10px;
+    margin-left: 50px;
+    margin-right: 50px;
+  }
+
+  .half-horizontal .globe-container.combined {
+    margin-left: 100px;
+    margin-right: 0;
+  }
+
+  .globe {
+    height: 200px;
+    margin-top: 15px;
+  }
+
+  .winner {
+    height: 140px;
+  }
+
+  .magnet-gold {
+    width: 20px;
+    position: absolute;
+    display: none;
+  }
+
+  .magnet-gold.stephen {
+    display: block;
+    top: 44%;
+    left: 12%;
+  }
+
+  .magnet-gold.federico {
+    display: block;
+    top: 43%;
+    left: 67%;
+  }
+
+  .magnet-gold.myke {
+    display: block;
+    top: 35%;
+    left: 56%;
+  }
+
+  .magnet-silver {
+    width: 15px;
+    position: absolute;
+    display: none;
+  }
+
+  .magnet-silver.stephen {
+    display: block;
+    top: 45%;
+    left: 14%;
+  }
+
+  .magnet-silver.federico {
+    display: block;
+    top: 44%;
+    left: 68%;
+  }
+
+  .magnet-silver.myke {
+    display: block;
+    top: 37%;
+    left: 58%;
+  }
+</style>
+
+{% template magtricky %}
+<div class="globe-container {% if combinedWinner %}combined{% endif %}">
+  <img class="image-dither globe" src="https://cdn.rknight.me/trmnl/rickies/connected-globe-on-light.png">
+  {% if combinedWinner %}
+  <img class="magnet-gold image-stroke {{ keynote.winner | downcase }}" src="https://cdn.rknight.me/trmnl/rickies/magnet.png">
+  {% else %}
+  <img class="magnet-silver image-stroke {{ keynote.winner | downcase }}" src="https://cdn.rknight.me/trmnl/rickies/magnet.png">
+  <img class="magnet-silver image-stroke {{ annual.winner | downcase }}" src="https://cdn.rknight.me/trmnl/rickies/magnet.png">
+  {% endif %}
+</div>
+{% endtemplate %}
+
+{% template keynoteorcombined %}
+<div class="item flex--col">
+  <img class="winner image-dither" src="https://cdn.rknight.me/trmnl/rickies/{{ keynote.winner | downcase }}.png">
+  <span class="title">{{ keynote.winner }}</span><br>
+  <span class="title title--small">{{ titles[keynote.winner][0] }}</span>
+  <span class="description">Crowned on {{ dateCrowned | date: '%B %e[S] %Y' | replace: '[S]',keynoteSuffix }}</span>
+</div>
+{% endtemplate %}
+
+{% template annualwinner %}
+<div class="item flex--col">
+  <img class="winner image-dither" src="https://cdn.rknight.me/trmnl/rickies/{{ annual.winner | downcase }}.png">
+  <span class="title">{{ annual.winner }}</span><br>
+  <span class="title title--small">{{ titles[annual.winner][0] }}</span>
+  <span class="description">Crowned on {{ annual.date | date: '%B %e[S] %Y' | replace: '[S]',crownedSuffix }}</span>
+</div>
+{% endtemplate %}

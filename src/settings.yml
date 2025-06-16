@@ -1,0 +1,18 @@
+---
+strategy: polling
+no_screen_padding: 'no'
+dark_mode: 'no'
+static_data: ''
+polling_verb: get
+polling_url: https://rickies.net/api/v1/winners.json
+polling_headers: ''
+id: 97896
+custom_fields:
+- keyname: _doesnt_matter
+  name: About This Plugin
+  field_type: author_bio
+  description: Keep track of the winners, and various titles, of <a href="https://rickies.net" class="underline" target="_blank">The Rickies</a>
+  github_url: https://github.com/rknightuk/trmnl-the-rickies
+  learn_more_url: https://rknight.me
+name: The Rickies
+refresh_interval: 1440

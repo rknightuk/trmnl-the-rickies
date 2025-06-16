@@ -1,0 +1,32 @@
+<div class="wrapper flex flex--row flex--center-y half-horizontal">
+  {% if combinedWinner == false %}
+  <div>
+    {% render 'keynoteorcombined', 
+    keynote: keynote, 
+    titles: titles, 
+    dateCrowned: dateCrowned,
+    crownedSuffix: crownedSuffix,
+    %}
+  </div>
+  {% endif %}
+
+  {% render 'magtricky', combinedWinner: combinedWinner, annual: annual, keynote: keynote %}
+
+  {% if combinedWinner == false %}
+  <div>
+    {% render 'annualwinner',
+    titles: titles, 
+    annual: annual,
+    annualSuffix: annualSuffix,
+    %}
+  </div>
+  {% else %}
+  {% render 'keynoteorcombined', 
+  keynote: keynote, 
+  titles: titles, 
+  dateCrowned: dateCrowned,
+  crownedSuffix: crownedSuffix,
+  %}
+  {% endif %}
+</div>
+</div>

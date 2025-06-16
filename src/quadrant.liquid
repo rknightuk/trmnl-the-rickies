@@ -1,0 +1,21 @@
+<div class="wrapper flex flex--col">
+  <div class="columns">
+    <div class="column">
+      {% render 'keynoteorcombined', 
+      keynote: keynote, 
+      titles: titles, 
+      dateCrowned: dateCrowned,
+      crownedSuffix: crownedSuffix,
+      %}
+    </div>
+    {% if combinedWinner == false %}
+    <div class="column">
+      {% render 'annualwinner',
+      titles: titles, 
+      annual: annual,
+      annualSuffix: annualSuffix,
+      %}
+    </div>
+    {% endif %}
+  </div>
+</div>
